@@ -1,0 +1,1 @@
+{"name":"pengedag-backend","version":"0.4.0","main":"server.js","scripts":{"start":"node server.js"},"dependencies":{"bcryptjs":"latest","cors":"latest","dotenv":"latest","express":"latest","jsonwebtoken":"latest","multer":"latest","stripe":"latest"}}
