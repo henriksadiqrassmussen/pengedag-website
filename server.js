@@ -134,13 +134,13 @@ app.get('/', (req, res) => {
   res.json({
     ok: true,
     app: 'Pengedag Backend',
-    version: '1.1.1',
-    note: 'Mobile endpoints aktive. Brug /health og /api/mobile/time-entries.'
+    version: '1.1.2',
+    note: 'Mobile endpoints aktive. Alias-ruter: /api/mobile/time-entries, /api/mobile/times, /api/mobile/timesheets, /api/mobile/entries.'
   });
 });
 
 app.get('/health', (req, res) => {
-  res.json({ ok: true, status: 'healthy', version: '1.1.1' });
+  res.json({ ok: true, status: 'healthy', version: '1.1.2' });
 });
 
 // ---------- Mobile time entries ----------
@@ -264,6 +264,30 @@ app.get('/api/compliance/audit/verify', (req, res) => {
 
 app.use((req, res) => {
   res.status(404).json({ ok: false, error: `Cannot ${req.method} ${req.path}` });
+});
+
+
+app.get('/api/mobile/routes', (req, res) => {
+  res.json({
+    ok: true,
+    version: '1.1.2',
+    routes: [
+      'GET /api/mobile/time-entries',
+      'GET /api/mobile/times',
+      'GET /api/mobile/timesheets',
+      'GET /api/mobile/entries',
+      'POST /api/mobile/time-entry',
+      'POST /api/mobile/time-entries',
+      'POST /api/mobile/times',
+      'POST /api/mobile/timesheets',
+      'POST /api/mobile/entries',
+      'POST /api/mobile/time-entries/:id/approve',
+      'GET /api/mobile/overtime-rules/:employeeId',
+      'POST /api/mobile/overtime-rules',
+      'POST /api/mobile/payslip',
+      'GET /api/mobile/payslip/:employeeId'
+    ]
+  });
 });
 
 app.listen(PORT, '0.0.0.0', () => {

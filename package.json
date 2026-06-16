@@ -1,7 +1,7 @@
 {
   "name": "pengedag-backend",
-  "version": "1.1.1",
-  "description": "Pengedag backend med mobile timer endpoints til medarbejderapp og desktop godkendelse",
+  "version": "1.1.2",
+  "description": "Pengedag backend med mobile alias fix: /api/mobile/times, /timesheets og /entries",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
