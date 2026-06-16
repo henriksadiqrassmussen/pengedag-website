@@ -1,0 +1,6 @@
+{
+  "company": {"name":"Pengedag Demo", "cvr":"12345678"},
+  "accounts": [{"id":"1000","name":"Bank","standardAccountId":"BANK"}],
+  "entries": [{"id":"B-1","date":"2026-06-16","text":"Demo salg","journalId":"SALG","lines":[{"account":"1000","debit":1250,"credit":0,"vatCode":"S25","vatAmount":250},{"account":"3000","debit":0,"credit":1000,"vatCode":"S25","vatAmount":0}]}],
+  "attachments": []
+}

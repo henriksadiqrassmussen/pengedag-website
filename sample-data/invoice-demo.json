@@ -1,0 +1,10 @@
+{
+  "invoiceNo":"F-2026-001",
+  "date":"2026-06-16",
+  "supplier":{"name":"Pengedag Demo","cvr":"12345678"},
+  "customer":{"name":"Demo Kommune","ean":"5790000000000","reference":"Test Reference"},
+  "buyerReference":"Test Reference",
+  "orderNo":"ORD-123",
+  "vatRate":25,
+  "lines":[{"text":"Flyttehjælp - timer","qty":4,"unitPrice":350}]
+}

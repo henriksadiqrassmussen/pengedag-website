@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pengedag OIOUBL/NemHandel fakturakladde. Skal schematron-/CIUS-valideres og sendes via godkendt NemHandel-adgangspunkt før produktion. -->
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+ xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+ xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+ <cbc:CustomizationID>OIOUBL-2.1-DRAFT</cbc:CustomizationID>
+ <cbc:ProfileID>Procurement-BilSim-1.0</cbc:ProfileID>
+ <cbc:ID>F-2026-001</cbc:ID>
+ <cbc:IssueDate>2026-06-16</cbc:IssueDate>
+ <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+ <cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+ <cbc:BuyerReference>Test Reference</cbc:BuyerReference>
+ <cac:AccountingSupplierParty><cac:Party><cbc:EndpointID schemeID="DK:CVR">12345678</cbc:EndpointID><cac:PartyName><cbc:Name>Pengedag Demo</cbc:Name></cac:PartyName></cac:Party></cac:AccountingSupplierParty>
+ <cac:AccountingCustomerParty><cac:Party><cbc:EndpointID schemeID="DK:GLN">5790000000000</cbc:EndpointID><cac:PartyName><cbc:Name>Demo Kommune</cbc:Name></cac:PartyName></cac:Party></cac:AccountingCustomerParty>
+ <cac:OrderReference><cbc:ID>ORD-123</cbc:ID></cac:OrderReference>
+ <cac:TaxTotal><cbc:TaxAmount currencyID="DKK">350.00</cbc:TaxAmount></cac:TaxTotal>
+ <cac:LegalMonetaryTotal><cbc:LineExtensionAmount currencyID="DKK">1400.00</cbc:LineExtensionAmount><cbc:TaxExclusiveAmount currencyID="DKK">1400.00</cbc:TaxExclusiveAmount><cbc:TaxInclusiveAmount currencyID="DKK">1750.00</cbc:TaxInclusiveAmount><cbc:PayableAmount currencyID="DKK">1750.00</cbc:PayableAmount></cac:LegalMonetaryTotal>
+ <cac:InvoiceLine><cbc:ID>1</cbc:ID><cbc:InvoicedQuantity>4</cbc:InvoicedQuantity><cbc:LineExtensionAmount currencyID="DKK">1400.00</cbc:LineExtensionAmount><cac:Item><cbc:Name>Flyttehjælp - timer</cbc:Name></cac:Item><cac:Price><cbc:PriceAmount currencyID="DKK">350.00</cbc:PriceAmount></cac:Price></cac:InvoiceLine>
+</Invoice>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Pengedag SAF-T eksportkladde. Skal valideres mod den officielle danske SAF-T XSD/profil før anmeldelse. -->
+<AuditFile xmlns="urn:StandardAuditFile-Taxation-Financial:DK">
+  <Header>
+    <AuditFileVersion>DK-SAF-T-2.0-DRAFT</AuditFileVersion>
+    <CompanyID>12345678</CompanyID>
+    <CompanyName>Pengedag Demo</CompanyName>
+    <TaxRegistrationNumber>12345678</TaxRegistrationNumber>
+    <CreationDate>2026-06-16</CreationDate>
+    <SoftwareCompanyName>Pengedag</SoftwareCompanyName>
+    <SoftwareID>Pengedag Vikarbureau</SoftwareID>
+    <SoftwareVersion>1.1.0</SoftwareVersion>
+  </Header>
+  <MasterFiles>
+    <GeneralLedgerAccounts>
+      <Account><AccountID>1000</AccountID><AccountDescription>Bank</AccountDescription><StandardAccountID>BANK</StandardAccountID></Account>
+    </GeneralLedgerAccounts>
+  </MasterFiles>
+  <GeneralLedgerEntries>
+    <Journal><JournalID>SALG</JournalID><Transaction><TransactionID>B-1</TransactionID><Period></Period><TransactionDate>2026-06-16</TransactionDate><Description>Demo salg</Description><Lines><Line><RecordID>B-1-1</RecordID><AccountID>1000</AccountID><DebitAmount>1250.00</DebitAmount><CreditAmount>0.00</CreditAmount><TaxInformation><TaxType>S25</TaxType><TaxAmount>250.00</TaxAmount></TaxInformation></Line><Line><RecordID>B-1-2</RecordID><AccountID>3000</AccountID><DebitAmount>0.00</DebitAmount><CreditAmount>1000.00</CreditAmount><TaxInformation><TaxType>S25</TaxType><TaxAmount>0.00</TaxAmount></TaxInformation></Line></Lines></Transaction></Journal>
+  </GeneralLedgerEntries>
+  <SourceDocuments>
+
+  </SourceDocuments>
+</AuditFile>

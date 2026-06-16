@@ -1,1 +1,20 @@
-{"name":"pengedag-backend","version":"0.4.0","main":"server.js","scripts":{"start":"node server.js"},"dependencies":{"bcryptjs":"latest","cors":"latest","dotenv":"latest","express":"latest","jsonwebtoken":"latest","multer":"latest","stripe":"latest"}}
+{
+  "name": "pengedag-backend",
+  "version": "1.1.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test:compliance": "node compliance/selftest.js",
+    "export:saft": "node compliance/saft-cli.js export ./sample-data ./exports/saft-demo.xml",
+    "invoice:oioubl": "node compliance/oioubl-cli.js ./sample-data/invoice-demo.json ./exports/invoice-demo.xml"
+  },
+  "dependencies": {
+    "bcryptjs": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "jsonwebtoken": "latest",
+    "multer": "latest",
+    "stripe": "latest"
+  }
+}
