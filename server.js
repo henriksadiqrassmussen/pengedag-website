@@ -46,22 +46,50 @@ function roundTo(value, step = 0.25) {
   return Math.round(value / s) * s;
 }
 
+function overlap(a1, a2, b1, b2) {
+  return Math.max(0, Math.min(a2, b2) - Math.max(a1, b1));
+}
+
+function calculateNightOvertimeMinutes(start, end, input = {}) {
+  const rule = input.overtimeRule || input.rules || {};
+  const enabled = rule.nightOvertimeAuto ?? input.nightOvertimeAuto ?? 'ja';
+  if (enabled === false || enabled === 'nej' || enabled === 'false') return 0;
+  const from = toMinutes(rule.nightOvertimeFrom || input.nightOvertimeFrom || '22:00');
+  const to = toMinutes(rule.nightOvertimeTo || input.nightOvertimeTo || '06:00');
+  let mins = 0;
+  for (let d = -1; d <= 1; d++) {
+    const base = d * 24 * 60;
+    if (from <= to) {
+      mins += overlap(start, end, base + from, base + to);
+    } else {
+      mins += overlap(start, end, base + from, base + 24 * 60 + to);
+    }
+  }
+  return Math.max(0, mins);
+}
+
 function calculateEntry(input = {}) {
+  const rule = input.overtimeRule || input.rules || {};
   const start = toMinutes(input.startTime);
   let end = toMinutes(input.endTime);
-  if (end < start) end += 24 * 60;
+  if (end <= start) end += 24 * 60;
   const pauseMinutes = Number(input.pauseMinutes || 0);
-  const rawHours = Math.max(0, (end - start - pauseMinutes) / 60);
+  const rawMinutes = Math.max(0, end - start - pauseMinutes);
+  const rawHours = rawMinutes / 60;
   const hours = Number(rawHours.toFixed(2));
 
-  const normalRate = Number(input.normalRate || input.hourlyRate || 160);
-  const overtimeRate = Number(input.overtimeRate || 220);
-  const customerRate = Number(input.customerRate || 320);
-  const vatRate = Number(input.vatRate ?? 25);
-  const overtimeAfterHours = Number(input.overtimeAfterHours || 8);
-  const roundStep = Number(input.overtimeRoundStep || 0.25);
+  const normalRate = Number(input.normalRate || input.hourlyRate || rule.normalRate || 160);
+  const overtimeRate = Number(input.overtimeRate || rule.overtimeRate || rule.standardOvertidTimeloen || 220);
+  const customerRate = Number(input.customerRate || rule.customerRate || 320);
+  const vatRate = Number(input.vatRate ?? rule.vatRate ?? 25);
+  const overtimeAfterHours = Number(input.overtimeAfterHours || rule.overtimeDailyAfter || rule.overtimeAfterHours || 7.5);
+  const roundStep = Number(input.overtimeRoundStep || rule.overtimeRound || rule.overtimeRoundStep || 0.25);
 
-  const overtimeHours = hours > overtimeAfterHours ? roundTo(hours - overtimeAfterHours, roundStep) : 0;
+  const dailyOvertime = hours > overtimeAfterHours ? hours - overtimeAfterHours : 0;
+  let nightMinutes = calculateNightOvertimeMinutes(start, end, input);
+  if (pauseMinutes > 0 && nightMinutes > 0) nightMinutes = Math.max(0, nightMinutes - pauseMinutes);
+  const nightOvertime = nightMinutes / 60;
+  const overtimeHours = Number(Math.min(hours, roundTo(Math.max(dailyOvertime, nightOvertime), roundStep)).toFixed(2));
   const normalHours = Number(Math.max(0, hours - overtimeHours).toFixed(2));
   const normalPay = Number((normalHours * normalRate).toFixed(2));
   const overtimePay = Number((overtimeHours * overtimeRate).toFixed(2));
@@ -85,7 +113,8 @@ function calculateEntry(input = {}) {
     customerTotalExVat,
     customerVat,
     customerTotalIncVat,
-    marginExVat
+    marginExVat,
+    nightOvertimeHours: Number(nightOvertime.toFixed(2))
   };
 }
 
@@ -124,13 +153,13 @@ app.get('/', (req, res) => {
   res.json({
     ok: true,
     app: 'Pengedag Backend',
-    version: '1.1.5-backend-only',
-    note: 'Railway backend only. No Electron build. Brug /health og /api/mobile/times.'
+    version: '1.2.2-routesfix',
+    note: 'Railway backend only. Mobile routes included. Brug /health, /api/mobile/routes og /api/mobile/times.'
   });
 });
 
 app.get('/health', (req, res) => {
-  res.json({ ok: true, status: 'healthy', version: '1.1.5-backend-only' });
+  res.json({ ok: true, status: 'healthy', version: '1.2.2-routesfix' });
 });
 
 app.get('/api/mobile/routes', (req, res) => {
@@ -210,9 +239,12 @@ app.get('/api/mobile/overtime-rules/:employeeId', (req, res) => {
   const rules = readJson(RULES_FILE, {});
   const employeeRules = rules[req.params.employeeId] || rules.default || {
     enabled: true,
-    overtimeAfterHours: 8,
+    overtimeAfterHours: 7.5,
     overtimeAfterWeekHours: 37,
     overtimeRoundStep: 0.25,
+    nightOvertimeAuto: 'ja',
+    nightOvertimeFrom: '22:00',
+    nightOvertimeTo: '06:00',
     normalRate: 160,
     overtimeRate: 220,
     customerRate: 320,

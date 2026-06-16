@@ -1,6 +1,6 @@
 {
-  "name": "pengedag-railway-backend-night-overtime",
-  "version": "1.2.1",
+  "name": "pengedag-railway-backend-routesfix",
+  "version": "1.2.2",
   "description": "Pengedag backend only for Railway - no Electron build",
   "main": "server.js",
   "scripts": {
