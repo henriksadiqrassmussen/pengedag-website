@@ -1,16 +1,20 @@
 {
   "name": "pengedag-backend",
-  "version": "1.1.2",
-  "description": "Pengedag backend med mobile alias fix: /api/mobile/times, /timesheets og /entries",
+  "version": "1.1.3",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "test:compliance": "node compliance/selftest.js",
+    "export:saft": "node compliance/saft-cli.js export ./sample-data ./exports/saft-demo.xml",
+    "invoice:oioubl": "node compliance/oioubl-cli.js ./sample-data/invoice-demo.json ./exports/invoice-demo.xml"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "multer": "^1.4.5-lts.1"
+    "bcryptjs": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "jsonwebtoken": "latest",
+    "multer": "latest",
+    "stripe": "latest"
   }
 }
