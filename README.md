@@ -1,40 +1,112 @@
-# Pengedag Backend v0.4
+# Pengedag Vikarbureau v1.0 – Godkendelses-klar
 
-Skabelon til login, 183 dages prøveperiode, Stripe webhook og revisor ZIP upload.
+Denne version er forberedt til arbejdet frem mod registrering hos Erhvervsstyrelsen.
 
-## Kør lokalt
+**Vigtigt:** Programmet er ikke registreret/godkendt endnu. Brug disclaimeren i appen og på hjemmesiden, indtil Erhvervsstyrelsen har registreret systemet.
+
+## Kør desktop
 ```bash
+npm install
+npm start
+```
+
+## Kør backend
+```bash
+cd pengedag-backend
 npm install
 cp .env.example .env
 npm start
 ```
 
-## Endpoints
-- GET /health
-- POST /api/register
-- POST /api/login
-- GET /api/license
-- POST /api/revisor/upload
-- POST /api/stripe/webhook
+## Nye mapper
+- `docs/` – kladder til systembeskrivelse, kravmatrix, IT-sikkerhed, backup og anmeldelse på Virk
+- `pengedag-backend/` – backend-skabelon til Railway, login, Stripe, revisor-upload og mobilapp
+- `medarbejder-app/` – PWA til medarbejdertimer
+- `pengedag-website/` – download-hjemmeside
 
-Vigtigt: Brug database, HTTPS, rigtig Stripe-signaturvalidering og persistent upload storage før produktion.
+## Nye sider i desktop
+- Godkendelse
+- Rettelseslog
+- Backup & sikkerhed
+
+# Pengedag Vikarbureau v1.0 Godkendelses-klar
+
+Windows/Electron app til små vikarbureauer, flyttefolk og medarbejderstyring.
+
+## Nyt i v1.0 Godkendelses-klar
+
+- Ny desktop-side: **Overtidsregler**.
+- Arbejdsgiver kan indtaste regler én gang:
+  - automatisk overtid ja/nej
+  - overtid efter X timer pr. dag/vagt
+  - overtid efter X timer pr. uge
+  - afrunding af overtid
+  - standard overtidstimeløn
+- Medarbejdere kan have medarbejder-specifik regel for overtid efter timer/dag.
+- Desktop-appen beregner automatisk normal timer/overtid på vagter/job.
+- Smartphone-appen kan hente overtidsregler fra backend og beregner automatisk overtid.
+- Når mobil-timer godkendes i desktop, genberegnes overtid, løn, kundepris, moms og dækningsbidrag ud fra arbejdsgivers regler.
+- Mobil-timer viser nu både normal timer og overtid.
+- Backend har endpoints til at gemme/hente overtidsregler for medarbejderappen.
+
+## Kør desktop
+
+```bash
+npm install
+npm start
+```
+
+## Kør backend
+
+```bash
+cd pengedag-backend
+npm install
+cp .env.example .env
+npm start
+```
+
+## Hjemmeside
+
+Upload `pengedag-website/` til dit webhotel. Medarbejderappen ligger under `pengedag-website/medarbejder-app/`.
+
+## Bemærk
+
+Programmet er stadig en lokal regnskabs- og vikarstyringshjælper. Det er ikke et registreret/godkendt bogføringssystem, og løn skal kontrolleres mod skattekort, eIndkomst, feriepenge, ATP og relevante aftaler.
 
 
-## Mobil medarbejderapp v0.5
-Backend har nu endpoints til smartphone-timer og lønseddel-hentning:
-- POST /api/mobile/time-entry
-- GET /api/mobile/time-entries
-- POST /api/mobile/payslip/publish
-- GET /api/mobile/payslip/:employeeId
-Sæt MOBILE_SHARED_SECRET i .env, hvis mobil-endpoints skal beskyttes med en delt nøgle.
+---
 
+## v1.1.3 Samlet compliance-tiltag
 
-## Overtidsregler v0.5.1
+Denne pakke tilføjer konkrete tekniske kladder til:
 
-Backend har nu endpoints til arbejdsgiverstyrede overtidsregler:
+- SAF-T eksport/import
+- NemHandel/OIOUBL e-faktura XML
+- Hash-baseret uforanderlig rettelseslog
+- Permanent bilagsopbevaring med SHA-256
+- Automatisk backup-motor
+- Databehandleraftale-checkliste
+- Revisor/bogholder-testplan
 
-- `POST /api/mobile/overtime-rules` gemmer standardregler.
-- `GET /api/mobile/overtime-rules/:employeeId` henter regler til medarbejderappen.
-- `POST /api/mobile/overtime-rules/:employeeId` kan gemme medarbejder-specifikke regler.
+Backend test:
 
-Medarbejderappen kan hente reglerne og beregner automatisk normal timer/overtid ud fra arbejdsgiverens indstillinger.
+```bash
+cd pengedag-backend
+npm install
+npm run test:compliance
+npm start
+```
+
+Nye backend endpoints:
+
+```text
+POST /api/compliance/saft/export
+POST /api/compliance/saft/import
+POST /api/compliance/oioubl/invoice
+POST /api/compliance/audit
+GET  /api/compliance/audit/verify
+POST /api/compliance/attachment
+POST /api/compliance/backup/run
+```
+
+Vigtigt: XML-generering er nu teknisk forberedt, men officielle XSD/schematron-valideringer og ekstern revisor/bogholder-test skal udføres før anmeldelse.
