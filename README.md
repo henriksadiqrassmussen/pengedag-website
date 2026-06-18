@@ -1,19 +1,25 @@
-Pengedag Railway Backend ONLY v1.2.1 - Nat-overtid
+# Pengedag Video Motor v1.4.5
 
-Denne pakke er kun til Railway backend. Upload kun disse filer til Railway:
-- package.json
-- package-lock.json
-- server.js
-- README.md
+Egen WebRTC beta uden Jitsi.
 
-Start command:
+## Start lokalt
+
+```bash
+npm install
 npm run start
+```
 
-Test:
-/health
-/api/mobile/times
+Åbn:
+- http://localhost:8080/owner.html?room=TEST001
+- http://localhost:8080/employee.html?room=TEST001
 
-Rettet:
-- Vagter over midnat beregnes korrekt.
-- Nat-overtid 22:00-06:00 understøttes.
-- 22:01-02:01 bliver 4,00 timer og 4,00 nat-overtid, hvis reglen er aktiv.
+På telefon kræver kamera/mikrofon normalt HTTPS.
+
+## Railway
+
+Upload denne mappe som separat Railway service.
+Start command:
+
+```bash
+npm run start
+```
