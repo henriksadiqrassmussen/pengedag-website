@@ -1,9 +1,1 @@
-{
-  "name": "pengedag-video-motor",
-  "version": "1.4.5",
-  "description": "Pengedag egen WebRTC video motor beta med bank-paa funktion",
-  "main": "server.js",
-  "scripts": { "start": "node server.js" },
-  "dependencies": { "express": "^4.19.2", "ws": "^8.18.0" },
-  "engines": { "node": ">=18" }
-}
+{"scripts":{"start":"node server.js"},"dependencies":{"express":"latest","ws":"latest","cors":"latest"},"devDependencies":{}}
